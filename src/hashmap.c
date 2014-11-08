@@ -8,17 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-typedef struct entry {
-	char* key;
-	void* data;
-	struct entry* next;
-} entry;
-
-typedef struct {
-	int size;
-	entry **entries;
-} hashmap;
+#include "hashmap.h"
 
 unsigned long hash(unsigned char* key) {
 	unsigned long hash = 5381;
@@ -84,23 +74,4 @@ void hashmap_display(hashmap* map) {
 			cursor = cursor->next;
 		}
 	}
-}
-
-int main (int argc, char**argv) {
-	hashmap* map = hashmap_new(15);
-	int v = 25;
-	int v2 = 2667;
-
-	// these two collide
-	hashmap_put(map, "Rob", &v);
-	hashmap_put(map, "Bob", &v2);
-
-	hashmap_put(map, "Joe", &v2);
-
-	//entry* joe = hashmap_get(map, "Bob");
-
-	//printf("key: %s, value: %d\n", joe->key, *((int*)joe->data));
-	hashmap_display(map);
-
-	return 0;
 }
