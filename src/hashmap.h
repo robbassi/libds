@@ -23,8 +23,9 @@ typedef struct {
 } hashmap;
 
 unsigned long hash_string(void* ptr);
+
+hashmap* hashmap_new(int size, hash_function hash);
 void hashmap_put(hashmap* map, char* key, void* value);
 entry* hashmap_get(hashmap* map, char* key);
-void hashmap_display(hashmap* map);
 
 #endif /* SRC_HASHMAP_H_ */

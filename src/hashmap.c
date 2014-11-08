@@ -21,10 +21,11 @@ unsigned long hash_string(void* ptr) {
 	return hash;
 }
 
-hashmap* hashmap_new(int size) {
+hashmap* hashmap_new(int size, hash_function hash) {
 	hashmap* map = (hashmap*) malloc(sizeof(hashmap));
 	map->entries = (entry**) malloc(size*sizeof(entry*));
 	map->size = size;
+	map->hash = hash;
 	return map;
 }
 
@@ -63,16 +64,4 @@ entry* hashmap_get(hashmap* map, char* key) {
 		}
 	}
 	return NULL;
-}
-
-void hashmap_display(hashmap* map) {
-	int i;
-	for (i = 0; i < map->size; i++) {
-		entry* cursor = map->entries[i];
-		printf("%d: \n", i);
-		while (cursor != NULL) {
-			printf("\tkey: %s, value: %d\n", cursor->key, *((int*)cursor->data));
-			cursor = cursor->next;
-		}
-	}
 }

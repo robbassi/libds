@@ -20,25 +20,29 @@ unsigned long myhash_string(void* ptr) {
 	return hash;
 }
 
+void hashmap_display(hashmap* map) {
+	int i;
+	for (i = 0; i < map->size; i++) {
+		entry* cursor = map->entries[i];
+		printf("%d: \n", i);
+		while (cursor != NULL) {
+			printf("\tkey: %s, value: %d\n", cursor->key, *((int*)cursor->data));
+			cursor = cursor->next;
+		}
+	}
+}
 
 int main (int argc, char**argv) {
-	hashmap* map = hashmap_new(15);
-
-	map->hash = hash_string;
+	//hashmap* map = hashmap_new(15, myhash_string);
+	hashmap* map = hashmap_new(15, hash_string);
 
 	int v = 25;
 	int v2 = 2667;
 
-	// these two collide
 	hashmap_put(map, "Rob", &v);
 	hashmap_put(map, "Bob", &v2);
-
 	hashmap_put(map, "Joe", &v2);
 
-	//entry* joe = hashmap_get(map, "Bob");
-
-	//printf("key: %s, value: %d\n", joe->key, *((int*)joe->data));
 	hashmap_display(map);
-
 	return 0;
 }
