@@ -9,8 +9,23 @@
 #include "hashmap.h"
 
 
+unsigned long myhash_string(void* ptr) {
+	unsigned char* key = (unsigned char*) ptr;
+	unsigned long hash = 4503;
+	int c;
+
+	while (c = *key++)
+		hash = ((hash << 7) + hash) + c; /* hash * 33 + c */
+
+	return hash;
+}
+
+
 int main (int argc, char**argv) {
 	hashmap* map = hashmap_new(15);
+
+	map->hash = hash_string;
+
 	int v = 25;
 	int v2 = 2667;
 

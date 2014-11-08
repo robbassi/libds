@@ -10,7 +10,8 @@
 #include <string.h>
 #include "hashmap.h"
 
-unsigned long hash(unsigned char* key) {
+unsigned long hash_string(void* ptr) {
+	unsigned char* key = (unsigned char*) ptr;
 	unsigned long hash = 5381;
 	int c;
 
@@ -28,7 +29,7 @@ hashmap* hashmap_new(int size) {
 }
 
 void hashmap_put(hashmap* map, char* key, void* value) {
-	long hashCode = hash(key);
+	long hashCode = map->hash(key);
 	int idx = hashCode % map->size;
 	entry* newEntry = (entry*) malloc(sizeof(entry));
 
@@ -47,7 +48,7 @@ void hashmap_put(hashmap* map, char* key, void* value) {
 }
 
 entry* hashmap_get(hashmap* map, char* key) {
-	int hashCode = hash(key);
+	int hashCode = map->hash(key);
 	int idx = hashCode % map->size;
 
 	if (map->entries[idx] != NULL) {
