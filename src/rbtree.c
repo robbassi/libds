@@ -34,7 +34,7 @@ void* rbtree_find(rbtree* tree, void* key) {
 		return NULL;
 
 	int eq = tree->compare(tree->root->key, key) == 0;
-	int dir = tree->compare(tree->root->key, key) > 0;
+	int dir = tree->compare(tree->root->key, key) < 0;
 
 	if (eq)
 		return tree->root->data;
@@ -49,7 +49,7 @@ void* rbtree_find_r(rbtree* tree, rbnode* root, void* key) {
 		return NULL;
 
 	int eq = tree->compare(root->key, key) == 0;
-	int dir = tree->compare(root->key, key) > 0;
+	int dir = tree->compare(root->key, key) < 0;
 
 	if (eq)
 		return root->data;
@@ -66,7 +66,7 @@ rbnode* rbtree_insert_r (rbtree* tree, rbnode* root, void* key, void* data) {
   if ( root == NULL )
     root = rbnode_new ( key, data );
   else if (tree->compare(root->key, key) != 0) {
-    int dir = tree->compare(root->key, key) > 0;
+    int dir = tree->compare(root->key, key) < 0;
 
     root->link[dir] = rbtree_insert_r ( tree, root->link[dir], key, data );
 
