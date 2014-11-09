@@ -60,6 +60,15 @@ entry* hashmap_get(hashmap* map, char* key) {
 		prev = cursor;
 		cursor = cursor->next;
 	}
-
 	return NULL;
+}
+
+void hashmap_delete(hashmap* map, char* key) {
+	int hashCode = map->hash(key);
+	int idx = hashCode % map->size;
+	entry* result = hashmap_get(map, key); // This also moves entry to head of list
+	if (result) {
+		map->entries[idx] = result->next;
+		free(result);
+	}
 }
