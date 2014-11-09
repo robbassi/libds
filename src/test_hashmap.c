@@ -7,9 +7,20 @@
 
 #include <stdio.h>
 #include "hashmap.h"
+#include "hashhashmap.h"
 
+unsigned long hash1(void* ptr) {
+	unsigned char* key = (unsigned char*) ptr;
+	unsigned long hash = 5381;
+	int c;
 
-unsigned long myhash_string(void* ptr) {
+	while (c = *key++)
+		hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+
+	return hash;
+}
+
+unsigned long hash2(void* ptr) {
 	unsigned char* key = (unsigned char*) ptr;
 	unsigned long hash = 4503;
 	int c;
@@ -32,8 +43,22 @@ void hashmap_display(hashmap* map) {
 	}
 }
 
+void hashhashmap_display(hashhashmap* map) {
+	hashmap* map2;
+	int i;
+	for (i = 0; i < map->size; i++) {
+		map2 = map->hashmaps[i];
+		if (map2) {
+			printf("%d:\n", i);
+			hashmap_display(map2);
+		} else {
+			printf("%d: NULL\n", i);
+		}
+	}
+}
+
 int main (int argc, char**argv) {
-	hashmap* map = hashmap_new(15, hash_string);
+	hashmap* map = hashmap_new(15, hash1);
 
 	int v = 25;
 	int v2 = 2667;
@@ -42,6 +67,19 @@ int main (int argc, char**argv) {
 	hashmap_put(map, "Bob", &v2);
 	hashmap_put(map, "Joe", &v2);
 
+	printf("Printing hashmap:\n");
 	hashmap_display(map);
+	printf("\n");
+
+	hashhashmap* map2 = hashhashmap_new(15, hash1, hash2);
+
+	hashhashmap_put(map2, "Rob", &v);
+	hashhashmap_put(map2, "Bob", &v2);
+	hashhashmap_put(map2, "Joe", &v2);
+
+	printf("Printing hashhashmap:\n");
+	hashhashmap_display(map2);
+	printf("\n");
+
 	return 0;
 }
