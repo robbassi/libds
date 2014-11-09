@@ -46,9 +46,18 @@ entry* hashmap_get(hashmap* map, char* key) {
 	int idx = hashCode % map->size;
 
 	entry* cursor = map->entries[idx];
+	entry* first = cursor;
+	entry* prev;
 	while (cursor != NULL) {
-		if (strcmp(cursor->key, key) == 0)
+		if (strcmp(cursor->key, key) == 0) {
+			if (cursor != first) { // move to front
+				prev->next = cursor->next;
+				cursor->next = first;
+				map->entries[idx] = cursor;
+			}
 			return cursor;
+		}
+		prev = cursor;
 		cursor = cursor->next;
 	}
 
