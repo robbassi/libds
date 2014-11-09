@@ -33,7 +33,6 @@ void hashmap_display(hashmap* map) {
 }
 
 int main (int argc, char**argv) {
-	//hashmap* map = hashmap_new(15, myhash_string);
 	hashmap* map = hashmap_new(15, hash_string);
 
 	int v = 25;

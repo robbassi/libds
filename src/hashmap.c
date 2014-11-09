@@ -34,34 +34,23 @@ void hashmap_put(hashmap* map, char* key, void* value) {
 	int idx = hashCode % map->size;
 	entry* newEntry = (entry*) malloc(sizeof(entry));
 
+	entry* last = map->entries[idx];
 	newEntry->key = key;
 	newEntry->data = value;
-	newEntry->next = NULL;
-
-	if (map->entries[idx] == NULL) {
-		map->entries[idx] = newEntry;
-	} else {
-		entry* last = map->entries[idx];
-		while (last->next != NULL)
-			last = last->next;
-		last->next = newEntry;
-	}
+	newEntry->next = last;
+	map->entries[idx] = newEntry;
 }
 
 entry* hashmap_get(hashmap* map, char* key) {
 	int hashCode = map->hash(key);
 	int idx = hashCode % map->size;
 
-	if (map->entries[idx] != NULL) {
-		if (map->entries[idx]->next == NULL) {
-			return map->entries[idx];
-		} else {
-			entry* cursor = map->entries[idx];
-			while (cursor != NULL) {
-				if (strcmp(cursor->key, key) == 0)
-					return cursor;
-			}
-		}
+	entry* cursor = map->entries[idx];
+	while (cursor != NULL) {
+		if (strcmp(cursor->key, key) == 0)
+			return cursor;
+		cursor = cursor->next;
 	}
+
 	return NULL;
 }
