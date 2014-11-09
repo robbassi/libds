@@ -8,7 +8,7 @@
 #ifndef SRC_COMMON_H_
 #define SRC_COMMON_H_
 
-typedef int (*comparator)(void*);
+typedef int (*comparator)(void*,void*);
 typedef unsigned long (*hash_function)(void*);
 
 #endif /* SRC_COMMON_H_ */
