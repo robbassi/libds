@@ -1,5 +1,34 @@
+#include <time.h>
+#include <stdlib.h>
+
 #ifndef TEST_FIXTURES_H_
 #define TEST_FIXTURES_H_
+
+void print_divider() {
+	printf("-----------------------------------------\n");
+}
+
+char *randstring(size_t length) {
+
+    static char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.-#'?!";
+    char *randomString = NULL;
+
+    if (length) {
+        randomString = malloc(sizeof(char) * (length +1));
+
+        if (randomString) {
+            int n;
+        	for (n = 0;n < length;n++) {
+                int key = rand() % (int)(sizeof(charset) -1);
+                randomString[n] = charset[key];
+            }
+
+            randomString[length] = '\0';
+        }
+    }
+
+    return randomString;
+}
 
 unsigned long hash1(void* ptr) {
 	unsigned char* key = (unsigned char*) ptr;
@@ -25,20 +54,18 @@ unsigned long hash2(void* ptr) {
 
 typedef struct test_entry {
 	char* key;
-	void* data;
+	int data;
 } test_entry;
 
-test_entry test_entries[10] = {
-		{"Rob", "123"},
-		{"Joe", "234"},
-		{"Bob", "432"},
-		{"John", "bla"},
-		{"Mary", "342"},
-		{"Jane", "23"},
-		{"Tyrone", "aw23"},
-		{"Bob", "323"},
-		{"Sara", "1233"},
-		{"Tim", "bla"}
-};
+test_entry* get_test_data(int size) {
+	test_entry* test_entries = malloc(size * sizeof(test_entry));
+	int i;
+	srand(time(NULL));
+	for (i=0; i<size; i++) {
+		test_entries[i].key = randstring(5);
+		test_entries[i].data = i;
+	}
+	return test_entries;
+}
 
 #endif /* TEST_FIXTURES_H_ */
