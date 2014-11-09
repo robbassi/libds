@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "hashmap.c"
 #include "hashhashmap.h"
 
 hashhashmap* hashhashmap_new(int size, hash_function hash1, hash_function hash2) {
