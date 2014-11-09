@@ -57,19 +57,16 @@ void* rbtree_find_r(rbtree* tree, rbnode* root, void* key) {
 		return rbtree_find_r(tree, root->link[dir], key);
 }
 
-int rbtree_insert ( rbtree* tree, void* key, void* data)
-{
+void rbtree_insert ( rbtree* tree, void* key, void* data) {
   tree->root = rbtree_insert_r ( tree, tree->root, key, data );
   tree->root->color = BLACK;
-  return 1;
 }
 
-rbnode* rbtree_insert_r (rbtree* tree, rbnode* root, void* key, void* data)
-{
+rbnode* rbtree_insert_r (rbtree* tree, rbnode* root, void* key, void* data) {
   if ( root == NULL )
     root = rbnode_new ( key, data );
-  else if ( data != root->data ) {
-    int dir = tree->compare(root->key, data) < 0;
+  else if (tree->compare(root->key, key) != 0) {
+    int dir = tree->compare(root->key, key) > 0;
 
     root->link[dir] = rbtree_insert_r ( tree, root->link[dir], key, data );
 

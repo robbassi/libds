@@ -27,6 +27,6 @@ typedef struct rbtree {
 
 rbtree* rbtree_new(comparator compare);
 void* rbtree_find(rbtree* tree, void* key);
-int rbtree_insert ( rbtree* tree, void* key, void* data);
+void rbtree_insert ( rbtree* tree, void* key, void* data);
 
 #endif /* SRC_RBTREE_H_ */
