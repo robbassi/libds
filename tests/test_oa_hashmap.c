@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include "fixtures.h"
 #include "../src/hashmaps/open_address.h"
-#include "../libs/gnuplot_i/src/gnuplot_i.h"
+#include "../libs/gnuplot_i.h"
 
 int main(int argc, char**argv) {
 	int size = 10000;
