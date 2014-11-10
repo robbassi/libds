@@ -17,8 +17,11 @@ test_hashhashmap: hashhashmap
 	./test_hashhashmap
 	rm test_hashhashmap
 
-test_oa_hashmap: oa_hashmap
-	gcc -o test_oa_hashmap tests/test_oa_hashmap.c oa_hashmap.o
+gnuplot: libs/gnuplot_i.c libs/gnuplot_i.h
+	$(CC) $(CFLAGS) -c -o gnuplot_i.o libs/gnuplot_i.c
+
+test_oa_hashmap: oa_hashmap gnuplot
+	gcc -o test_oa_hashmap tests/test_oa_hashmap.c oa_hashmap.o gnuplot_i.o
 	./test_oa_hashmap
 	rm test_oa_hashmap
 	
