@@ -53,21 +53,21 @@ int main(int argc, char**argv) {
 		hashhashmap_put(map, test_entries[i].key, &test_entries[i].data);
 	}
 	diff = clock() - start;
-	printf("PUT: \t\t%ldms\n", diff);
+	printf("PUT: \t\t%gs\n", (double)diff/(double)CLOCKS_PER_SEC);
 
 	for(i=0; i<size; i++) {
 		hashhashmap_get(map, test_entries[i].key);
 	}
 
 	diff = clock() - diff;
-	printf("GET: \t\t%ldms\n", diff);
+	printf("GET: \t\t%gs\n", (double)diff/(double)CLOCKS_PER_SEC);
 
 	for(i=0; i<size; i++) {
 		hashhashmap_delete(map, test_entries[i].key);
 	}
 
 	diff = clock() - diff;
-	printf("DELETE: \t%ldms\n", diff);
+	printf("DELETE: \t%gs\n", (double)diff/(double)CLOCKS_PER_SEC);
 
 	print_divider();
 

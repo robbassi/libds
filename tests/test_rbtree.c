@@ -37,14 +37,14 @@ int main (int argc, char**argv) {
 		rbtree_insert(tree, test_entries[i].key, &test_entries[i].data);
 	}
 	diff = clock() - start;
-	printf("PUT: \t\t%ldms\n", diff);
+	printf("PUT: \t\t%gs\n", (double)diff/(double)CLOCKS_PER_SEC);
 
 	for(i=0; i<size; i++) {
 		rbtree_find(tree, test_entries[i].key);
 	}
 
 	diff = clock() - diff;
-	printf("GET: \t\t%ldms\n", diff);
+	printf("GET: \t\t%gs\n", (double)diff/(double)CLOCKS_PER_SEC);
 
 	print_divider();
 
