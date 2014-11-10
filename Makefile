@@ -1,6 +1,6 @@
 # Tests
 
-test: test_hashmap test_rbtree test_hashhashmap
+test: test_hashmap test_rbtree test_hashhashmap test_oa_hashmap
 
 test_hashmap: hashmap
 	gcc -o test_hashmap tests/test_hashmap.c hashmap.o
@@ -16,10 +16,15 @@ test_hashhashmap: hashhashmap
 	gcc -o test_hashhashmap tests/test_hashhashmap.c hashhashmap.o
 	./test_hashhashmap
 	rm test_hashhashmap
+
+test_oa_hashmap: oa_hashmap
+	gcc -o test_oa_hashmap tests/test_oa_hashmap.c oa_hashmap.o
+	./test_oa_hashmap
+	rm test_oa_hashmap
 	
 # Core
 
-all: hashmap rbtree hashhashmap
+all: hashmap rbtree hashhashmap oa_hashmap
 	
 hashmap:
 	gcc -c -o hashmap.o src/hashmap.c
@@ -29,6 +34,9 @@ rbtree:
 
 hashhashmap:
 	gcc -c -o hashhashmap.o src/hashhashmap.c
+
+oa_hashmap:
+	gcc -c -o oa_hashmap.o src/hashmaps/open_address.c
 	
 clean:
 	rm *.o
