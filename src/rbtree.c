@@ -43,7 +43,6 @@ void* rbtree_find(rbtree* tree, void* key) {
 }
 
 void* rbtree_find_r(rbtree* tree, rbnode* root, void* key) {
-	puts("recur");
 	if (root == NULL)
 		return NULL;
 
@@ -197,8 +196,7 @@ int is_red(rbnode* root) {
 	return root != NULL && root->color == RED;
 }
 
-rbnode* rbtree_single(rbnode* root, int dir) {
-	puts("single");
+rbnode* rbtree_single ( rbnode* root, int dir ) {
 	rbnode* save = root->link[!dir];
 
 	root->link[!dir] = save->link[dir];
@@ -210,10 +208,9 @@ rbnode* rbtree_single(rbnode* root, int dir) {
 	return save;
 }
 
-rbnode* rbtree_double(rbnode* root, int dir) {
-	puts("double");
-	root->link[!dir] = rbtree_single(root->link[!dir], !dir);
-	return rbtree_single(root, dir);
+rbnode* rbtree_double ( rbnode* root, int dir ) {
+	root->link[!dir] = rbtree_single ( root->link[!dir], !dir );
+	return rbtree_single ( root, dir );
 }
 
 int rbtree_rb_assert(rbnode* root) {
