@@ -30,13 +30,13 @@ test_oa_hashmap: oa_hashmap gnuplot
 all: hashmap rbtree hashhashmap oa_hashmap
 	
 hashmap:
-	gcc -c -o hashmap.o src/hashmap.c
+	gcc -c -o hashmap.o src/hashmaps/hashmap.c
 
 rbtree:
-	gcc -c -o rbtree.o src/rbtree.c	
+	gcc -c -o rbtree.o src/trees/rbtree.c	
 
 hashhashmap:
-	gcc -c -o hashhashmap.o src/hashhashmap.c
+	gcc -c -o hashhashmap.o src/hashmaps/hashhashmap.c
 
 oa_hashmap:
 	gcc -c -o oa_hashmap.o src/hashmaps/open_address.c

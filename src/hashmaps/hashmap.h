@@ -8,7 +8,7 @@
 #ifndef SRC_HASHMAP_H_
 #define SRC_HASHMAP_H_
 
-#include "common.h"
+#include "../common.h"
 
 typedef struct entry {
 	char* key;

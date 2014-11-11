@@ -8,7 +8,7 @@
 #include <time.h>
 #include <stdio.h>
 #include "fixtures.h"
-#include "../src/hashmap.h"
+#include "../src/hashmaps/hashmap.h"
 
 void hashmap_display(hashmap* map) {
 	int i;

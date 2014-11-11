@@ -8,7 +8,7 @@
 #ifndef SRC_RBTREE_H_
 #define SRC_RBTREE_H_
 
-#include "common.h"
+#include "../common.h"
 
 #define RED 0
 #define BLACK 1
