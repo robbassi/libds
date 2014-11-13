@@ -3,6 +3,7 @@
  *
  *  Created on: Nov 7, 2014
  *  Author: Rob Bassi
+ *  Author: Ramsey D'silva
  */
 
 #include <stdio.h>
@@ -18,8 +19,8 @@ hashmap* hashmap_new(int size, hash_function hash) {
 	return map;
 }
 
-void hashmap_put(hashmap* map, char* key, void* value) {
-	long hashCode = map->hash(key);
+void hashmap_put(hashmap* map, void* key, void* value) {
+	unsigned long hashCode = map->hash(key);
 	int idx = hashCode % map->size;
 	entry* newEntry = (entry*) malloc(sizeof(entry));
 	entry* last = map->entries[idx];
@@ -29,8 +30,8 @@ void hashmap_put(hashmap* map, char* key, void* value) {
 	map->entries[idx] = newEntry;
 }
 
-entry* hashmap_get(hashmap* map, char* key) {
-	long hashCode = map->hash(key);
+entry* hashmap_get(hashmap* map, void* key) {
+	unsigned long hashCode = map->hash(key);
 	int idx = hashCode % map->size;
 	entry* cursor = map->entries[idx];
 	entry* first = cursor;
@@ -50,8 +51,8 @@ entry* hashmap_get(hashmap* map, char* key) {
 	return NULL;
 }
 
-void hashmap_delete(hashmap* map, char* key) {
-	long hashCode = map->hash(key);
+void hashmap_delete(hashmap* map, void* key) {
+	unsigned long hashCode = map->hash(key);
 	int idx = hashCode % map->size;
 	entry* result = hashmap_get(map, key); // This also moves entry to head of list
 	if (result) {

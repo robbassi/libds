@@ -59,6 +59,7 @@ int main(int argc, char**argv) {
 		hashhashmap_get(map, test_entries[i].key);
 	}
 
+
 	diff = clock() - diff;
 	printf("GET: \t\t%gs\n", (double)diff/(double)CLOCKS_PER_SEC);
 
@@ -69,6 +70,7 @@ int main(int argc, char**argv) {
 	diff = clock() - diff;
 	printf("DELETE: \t%gs\n", (double)diff/(double)CLOCKS_PER_SEC);
 
+	//hashhashmap_display(map);
 	print_divider();
 
 	return 0;

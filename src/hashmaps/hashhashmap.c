@@ -32,12 +32,11 @@ void hashhashmap_put(hashhashmap* map, char* key, void* value) {
 	hashmap_put(map2, key, value);
 }
 
-
 entry* hashhashmap_get(hashhashmap* map, char* key) {
 	int hashCode = map->hash1(key);
 	int idx = hashCode % map->size;
 	hashmap* map2 = map->hashmaps[idx];
-	if (map2) {
+	if (map2 != NULL) {
 		return hashmap_get(map2, key);
 	}
 	return NULL;

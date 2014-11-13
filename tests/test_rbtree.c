@@ -10,6 +10,7 @@
 #include "fixtures.h"
 #include "../src/trees/rbtree.h"
 
+void rbnode_tojson_r(rbnode* node);
 
 struct data {
 	char* name;
@@ -50,17 +51,20 @@ void rbnode_tojson_r(rbnode* node) {
 int main (int argc, char**argv) {
 
 	rbtree* tree = rbtree_new(my_comparator);
+//
+//	int key1 = 5;
+//	int key2 = 4;
+//	int key3 = 3;
+//	int key4 = 6;
+//	int key5 = 1;
+//
+//	struct data one = { .name="Rob", .addr="123 Some Street" };
+//	struct data two = { .name="Joe", .addr="23462 Lakeshore" };
+//	struct data three = { .name="Blah", .addr="xxx" };
+//	struct data four = { .name="sdfasd", .addr="sdfasd" };
 
-	int key1 = 5;
-	int key2 = 4;
-	int key3 = 3;
-	int key4 = 6;
-	int key5 = 1;
-
-	struct data one = { .name="Rob", .addr="123 Some Street" };
-	struct data two = { .name="Joe", .addr="23462 Lakeshore" };
-	struct data three = { .name="Blah", .addr="xxx" };
-	struct data four = { .name="sdfasd", .addr="sdfasd" };
+	int size = 10000;
+	test_entry* test_entries = get_test_data(size);
 
 
 
@@ -68,28 +72,19 @@ int main (int argc, char**argv) {
 
 	printf("Red Black Tree[%d]\n", 5);
 	clock_t start = clock(), diff;
-	puts("insert 6");
-	rbtree_insert(tree, &key4, &four);
-	puts("insert 1");
-	rbtree_insert(tree, &key5, &three);
-	puts("insert 3");
-	rbtree_insert(tree, &key3, &three);
-	puts("insert 5");
-	rbtree_insert(tree, &key1, &one);
-	puts("insert 4");
-	rbtree_insert(tree, &key2, &two);
+	int i;
+	for(i=0; i<size; i++) {
+		rbtree_insert(tree, test_entries[i].key, &test_entries[i].data);
+	}
 	diff = clock() - start;
-	printf("PUT: \t\t%gs\n", (double)diff/(double)CLOCKS_PER_SEC);
-
-	struct data* d = (struct data*) rbtree_find(tree, &key4);
-
-	if (d != NULL)
-		printf("Found: {name:%s, addr:%s}\n", d->name, d->addr);
-	else
-		puts("Not found");
-
+	printf("PUT: \t\t%fs\n", (double)diff/(double)CLOCKS_PER_SEC);
+	for(i=0; i<size; i++) {
+		test_entry* entry = rbtree_find(tree, test_entries[i].key);
+		if (entry == NULL)
+			puts("FAIL");
+	}
 	diff = clock() - diff;
-	printf("GET: \t\t%gs\n", (double)diff/(double)CLOCKS_PER_SEC);
+	printf("GET: \t\t%fs\n", (double)diff/(double)CLOCKS_PER_SEC);
 
 	print_divider();
 
