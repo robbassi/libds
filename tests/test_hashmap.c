@@ -54,7 +54,6 @@ int main(int argc, char**argv) {
 	diff = clock() - diff;
 	printf("DELETE: \t%fs\n", (double)diff/(double)CLOCKS_PER_SEC);
 
-
 	print_divider();
 
 	return 0;

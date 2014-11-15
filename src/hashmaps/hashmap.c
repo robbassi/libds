@@ -11,6 +11,8 @@
 #include <string.h>
 #include "hashmap.h"
 
+entry* hashmap_get_entry(hashmap* map, void* key);
+
 hashmap* hashmap_new(int size, hash_function hash) {
 	hashmap* map = (hashmap*) malloc(sizeof(hashmap));
 	map->entries = (entry**) malloc(size*sizeof(entry*));
@@ -30,7 +32,24 @@ void hashmap_put(hashmap* map, void* key, void* value) {
 	map->entries[idx] = newEntry;
 }
 
-entry* hashmap_get(hashmap* map, void* key) {
+void* hashmap_get(hashmap* map, void* key) {
+	entry *e = hashmap_get_entry(map, key);
+	if (e != NULL)
+		return e->data;
+	return NULL;
+}
+
+void hashmap_delete(hashmap* map, void* key) {
+	unsigned long hashCode = map->hash(key);
+	int idx = hashCode % map->size;
+	entry* result = hashmap_get_entry(map, key); // This also moves entry to head of list
+	if (result) {
+		map->entries[idx] = result->next;
+		free(result);
+	}
+}
+
+entry* hashmap_get_entry(hashmap* map, void* key) {
 	unsigned long hashCode = map->hash(key);
 	int idx = hashCode % map->size;
 	entry* cursor = map->entries[idx];
@@ -51,12 +70,3 @@ entry* hashmap_get(hashmap* map, void* key) {
 	return NULL;
 }
 
-void hashmap_delete(hashmap* map, void* key) {
-	unsigned long hashCode = map->hash(key);
-	int idx = hashCode % map->size;
-	entry* result = hashmap_get(map, key); // This also moves entry to head of list
-	if (result) {
-		map->entries[idx] = result->next;
-		free(result);
-	}
-}
